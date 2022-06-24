@@ -5,6 +5,6 @@ i probably shouldn'ta done this
 
 Example:
 
-https://twitter.com/threadodo_bot/status/1540169900890550272?s=20&t=CWB1LO--RK9VBidjGgCgAg
+https://twitter.com/threadodo_bot/status/1540169900890550272
 
 https://zenodo.org/record/6717182#.YrUu0JDMLzc
