@@ -1,8 +1,5 @@
 from pathlib import Path
-from pprint import pprint
 import logging
-import pdb
-
 import tweepy
 
 from threadodo.creds import Creds, Zenodo_Creds
@@ -35,12 +32,10 @@ class Threadodo(tweepy.StreamingClient):
 
     def on_response(self, response:tweepy.Response):
         """
-        Convert thread to
-        :param response:
-        :return:
+        Convert thread to pdf, then like yno archive it on zenodo
         """
-        pdb.set_trace()
-        pprint(response)
+        self.logger.info('tagged in tweet')
+        self.logger.info(response)
         if not self._check_mentioned(response.data):
             self.logger.info('Stream received, but was not directly mentioned')
             return
@@ -53,7 +48,6 @@ class Threadodo(tweepy.StreamingClient):
             depo = post_pdf(pdf, thread, self.zenodo_creds)
             self.logger.info('posted pdf')
             self.logger.debug(depo)
-
 
         finally:
             pdf.unlink()

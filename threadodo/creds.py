@@ -1,10 +1,11 @@
+"""
+No, not the actual creds. and dont go lookin for em in the git history cuz they aint in there neither
+"""
+
 import json
 from dataclasses import dataclass
 from pathlib import Path
 import typing
-
-
-
 
 @dataclass
 class Creds:

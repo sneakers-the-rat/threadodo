@@ -7,6 +7,7 @@ from pprint import pprint
 from dataclasses import dataclass
 import typing
 from typing import List
+from logging import getLogger
 
 @dataclass
 class Deposition:
@@ -19,11 +20,15 @@ class Deposition:
 
 def post_pdf(pdf:Path,
              thread:Thread,
-             creds:Zenodo_Creds=Zenodo_Creds.from_json(Path('zenodo_creds.json'))
+             creds:Zenodo_Creds=Zenodo_Creds.from_json(Path('zenodo_creds.json')),
+             loglevel:str="DEBUG"
              ) -> Deposition:
     """
     https://developers.zenodo.org/#quickstart-upload
     """
+    logger = getLogger('threadodo.zenodo')
+    logger.setLevel(loglevel)
+
     params = {'access_token': creds.access_token}
     headers = {"Content-Type": "application/json"}
 
@@ -34,8 +39,8 @@ def post_pdf(pdf:Path,
                       data="{}"
                       )
     deposit = dep_r.json()
-    print('deposition', dep_r.status_code)
-    pprint(deposit)
+    logger.info(f'deposition: {dep_r.status_code}')
+    logger.debug(deposit)
 
     with open(pdf, 'rb') as pdf:
         r = requests.put(
@@ -43,7 +48,7 @@ def post_pdf(pdf:Path,
             data=pdf,
             params=params
         )
-    print('upload', r.status_code)
+    logger.info(f'upload: {r.status_code}')
 
     metadata = {
         'metadata': {
@@ -58,10 +63,11 @@ def post_pdf(pdf:Path,
                           params=params,
                           data=json.dumps(metadata),
                           headers=headers)
-    print('meta', meta_r.status_code)
+    logger.info(f'meta: {meta_r.status_code}')
 
     pub_r = requests.post(f'https://zenodo.org/api/deposit/depositions/{deposit["id"]}/actions/publish',
                           params=params)
-    print('pub', pub_r.status_code)
+    logger.info(f'pub: {pub_r.status_code}')
     pub_json = pub_r.json()
+    logger.debug(pub_json)
     return Deposition(pub_json['doi'], pub_json['doi_url'], pub_json['title'], pub_json['id'])
