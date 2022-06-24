@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "threadodo"
+version = "0.1.0"
+description = "a bot to automatically post twitter threads to zenodo"
+authors = ["sneakers-the-rat <JLSaunders987@gmail.com>"]
+license = "MPL-2.0"
+packages = [
+    { include="threadodo" }
+]
+
+[tool.poetry.scripts]
+threadodo = "threadodo.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+tweepy = "^4.10.0"
+pypandoc = "^1.8.1"
+weasyprint = "^55.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
