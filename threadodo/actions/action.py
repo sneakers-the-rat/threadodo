@@ -33,7 +33,7 @@ class Action(ABC):
         super(Action, self).__init__()
         self.bot = bot
 
-    @abstractmethod
+    #@abstractmethod
     def do(self, response:Response) -> Result:
         """
         Encapsulate the other actions and uh do the action!
@@ -41,14 +41,14 @@ class Action(ABC):
             :
         """
 
-    @abstractmethod
-    def check(cls, response:Response) -> bool:
+    #@abstractmethod
+    def check(self, response:Response) -> bool:
         """
         Check if the condition of this action is met
         """
 
 
-    @abstractmethod
+    #@abstractmethod
     def get(self) -> typing.Any:
         """
         If this action sets something, get its value.
