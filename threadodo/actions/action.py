@@ -49,7 +49,7 @@ class Action(ABC):
 
 
     #@abstractmethod
-    def get(self) -> typing.Any:
+    def get(self, response:Response) -> typing.Any:
         """
         If this action sets something, get its value.
 
